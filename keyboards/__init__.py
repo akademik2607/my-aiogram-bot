@@ -1,2 +1,2 @@
-from . import default
-from . import inline
+from .default import main_menu_markup
+from .inline import test_or_settings_markup
