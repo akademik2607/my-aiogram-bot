@@ -1,7 +1,7 @@
 import pymysql
 from data import config
 
-def db_request(val_name):
+def db_request(val_name, parent_val):
     connection = pymysql.connect(host=config.DB_HOST,
                                  user=config.DB_USER,
                                  password=config.DB_PASS,
@@ -17,7 +17,12 @@ def db_request(val_name):
                 cursor.execute(sql)
                 result = cursor.fetchall()
             elif val_name == "sub_category":
-                pass
+                sql = f'''SELECT sub_category_name FROM sub_categories 
+                      INNER JOIN categories 
+                      ON sub_categories.category_id = categories.id 
+                      WHERE categories.category_name = "{parent_val}";'''
+                cursor.execute(sql)
+                result = cursor.fetchall()
             return result
     finally:
         connection.close()
