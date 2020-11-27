@@ -17,10 +17,14 @@ def db_request(val_name, parent_val):
                 cursor.execute(sql)
                 result = cursor.fetchall()
             elif val_name == "sub_category":
-                sql = f'''SELECT sub_category_name FROM sub_categories 
-                      INNER JOIN categories 
-                      ON sub_categories.category_id = categories.id 
+                sql = f'''SELECT sub_category_name FROM sub_categories
+                      INNER JOIN categories
+                      ON sub_categories.category_id = categories.id
                       WHERE categories.category_name = "{parent_val}";'''
+                cursor.execute(sql)
+                result = cursor.fetchall()
+            elif val_name == 'type_of_question':
+                sql = "SELECT `type_name`  FROM `type_of_question`;"
                 cursor.execute(sql)
                 result = cursor.fetchall()
             return result
