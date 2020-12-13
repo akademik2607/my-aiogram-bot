@@ -13,11 +13,12 @@ def db_request(val_name, parent_val):
 
         with connection.cursor() as cursor:
             if val_name == 'category':
-                sql = "SELECT `category_name`  FROM `categories`"
+                sql = "SELECT `category_name`, `id`  FROM `categories`"
                 cursor.execute(sql)
                 result = cursor.fetchall()
             elif val_name == "sub_category":
-                sql = f'''SELECT sub_category_name FROM sub_categories
+                sql = f'''SELECT `sub_category_name`, sub_categories.id
+                      FROM sub_categories
                       INNER JOIN categories
                       ON sub_categories.category_id = categories.id
                       WHERE categories.category_name = "{parent_val}";'''
@@ -27,6 +28,7 @@ def db_request(val_name, parent_val):
                 sql = "SELECT `type_name`  FROM `type_of_question`;"
                 cursor.execute(sql)
                 result = cursor.fetchall()
+            print(result)
             return result
     finally:
         connection.close()
